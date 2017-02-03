@@ -3385,9 +3385,9 @@ tough-cookie@~2.3.0:
   dependencies:
     punycode "^1.4.1"
 
-tractor-client@0.10.0-beta.0:
-  version "0.10.0-beta.0"
-  resolved "https://registry.yarnpkg.com/tractor-client/-/tractor-client-0.10.0-beta.0.tgz#60da9d99c5b0123bb14ea653ba9ea89a87358804"
+tractor-client@0.10.2-beta.0:
+  version "0.10.2-beta.0"
+  resolved "https://registry.yarnpkg.com/tractor-client/-/tractor-client-0.10.2-beta.0.tgz#c588f92a8abf30a132681e0f490b331170c02ed8"
 
 tractor-config-loader@0.1.0:
   version "0.1.0"
@@ -3403,13 +3403,22 @@ tractor-config-loader@0.1.1:
     lodash.defaults "4.2.0"
     minimist "1.2.0"
 
-tractor-error-handler@0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/tractor-error-handler/-/tractor-error-handler-0.1.1.tgz#6fe73d95d3050fddb17fa5e4e243d723bb01585d"
+tractor-config-loader@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/tractor-config-loader/-/tractor-config-loader-0.2.1.tgz#3176a5a23af56842ace36f67002166b52a82feab"
+  dependencies:
+    lodash.defaults "4.2.0"
+    minimist "1.2.0"
 
 tractor-error-handler@0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/tractor-error-handler/-/tractor-error-handler-0.1.2.tgz#134c6f058740c8c6c3fed87af018422f3a934db3"
+
+tractor-error-handler@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/tractor-error-handler/-/tractor-error-handler-0.1.4.tgz#dc965011611e65284bdb809aeca94528b11bd7c2"
+  dependencies:
+    tractor-logger "^0.1.0"
 
 tractor-file-structure@0.1.0-beta.4:
   version "0.1.0-beta.4"
@@ -3440,15 +3449,21 @@ tractor-logger@0.1.0-beta.0:
   dependencies:
     npmlog "4.0.2"
 
-tractor-plugin-loader@0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/tractor-plugin-loader/-/tractor-plugin-loader-0.1.2.tgz#53e6588c6180a089c35bffc6e6969404b0c76517"
+tractor-logger@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/tractor-logger/-/tractor-logger-0.1.0.tgz#8d0215c7dd238abc6f8d87303952444c74e3785b"
+  dependencies:
+    npmlog "4.0.2"
+
+tractor-plugin-loader@0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/tractor-plugin-loader/-/tractor-plugin-loader-0.1.4.tgz#4c513f6d1d6b8e90221ed28b7868cbf84c92d74d"
   dependencies:
     camel-case "3.0.0"
     param-case "2.1.0"
     sentence-case "2.1.0"
-    tractor-config-loader "0.1.0"
-    tractor-error-handler "0.1.1"
+    tractor-config-loader "^0.2.1"
+    tractor-error-handler "^0.1.4"
 
 tryit@^1.0.1:
   version "1.0.3"
