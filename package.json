@@ -64,7 +64,7 @@
     "pascal-case": "2.0.0",
     "socket.io": "1.7.2",
     "stripcolorcodes": "0.1.0",
-    "tractor-client": "0.10.2-beta.0",
+    "tractor-client": "0.10.3-beta.0",
     "tractor-config-loader": "0.1.1",
     "tractor-error-handler": "0.1.2",
     "tractor-file-structure": "0.1.0-beta.5",
