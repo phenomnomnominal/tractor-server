@@ -49,7 +49,7 @@
   },
   "dependencies": {
     "bluebird": "3.4.7",
-    "body-parser": "1.16.0",
+    "body-parser": "1.16.1",
     "camel-case": "3.0.0",
     "cors": "2.8.1",
     "escodegen": "1.8.1",
