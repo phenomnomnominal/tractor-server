@@ -64,7 +64,7 @@
     "lodash.template": "4.4.0",
     "npmlog": "4.0.2",
     "pascal-case": "2.0.0",
-    "socket.io": "1.7.2",
+    "socket.io": "1.7.3",
     "stripcolorcodes": "0.1.0",
     "tractor-client": "^0.10.3-beta.0",
     "tractor-config-loader": "^0.2.2",
