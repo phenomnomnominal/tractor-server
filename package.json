@@ -54,7 +54,7 @@
     "cors": "2.8.1",
     "escodegen": "1.8.1",
     "esprima": "2.7.3",
-    "esquery": "0.4.0",
+    "esquery": "1.0.0",
     "estemplate": "0.5.1",
     "express": "4.14.1",
     "gherkin": "2.12.2",
