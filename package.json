@@ -45,7 +45,7 @@
     "mocha": "3.2.0",
     "npm-watch": "0.1.7",
     "sinon": "1.17.7",
-    "sinon-chai": "2.8.0"
+    "sinon-chai": "2.9.0"
   },
   "dependencies": {
     "bluebird": "3.4.7",
