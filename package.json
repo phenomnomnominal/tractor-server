@@ -39,7 +39,7 @@
     "chai": "3.5.0",
     "coveralls": "2.11.16",
     "dedent": "0.7.0",
-    "dirty-chai": "1.2.2",
+    "dirty-chai": "2.0.1",
     "eslint": "3.14.1",
     "istanbul": "1.0.0-alpha.2",
     "mocha": "3.2.0",
