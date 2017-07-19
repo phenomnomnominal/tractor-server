@@ -11,7 +11,7 @@ import express from 'express';
 import http from 'http';
 import template from 'lodash.template';
 import io from 'socket.io';
-import { serveFileStructure } from 'tractor-file-structure';
+import { FileStructure, serveFileStructure } from 'tractor-file-structure';
 
 // Errors:
 import { TractorError } from 'tractor-error-handler';
@@ -36,7 +36,7 @@ export function start (config) {
 }
 start['@Inject'] = ['config'];
 
-export function init (di, plugins) {
+export function init (config, di, plugins) {
     let application = express();
     /* eslint-disable new-cap */
     server = http.Server(application);
@@ -77,14 +77,32 @@ export function init (di, plugins) {
 
     return servePlugins(di, plugins)
     .then(() => {
+        let { features, pageObjects, stepDefinitions } = config;
+
+        let featuresPath = path.resolve(process.cwd(), features.directory);
+        let featuresFS = new FileStructure(featuresPath);
+        let pageObjectsPath = path.resolve(process.cwd(), pageObjects.directory);
+        let pageObjectsFS = new FileStructure(pageObjectsPath);
+        let stepDefinitionsPath = path.resolve(process.cwd(), stepDefinitions.directory);
+        let stepDefinitionsFS = new FileStructure(stepDefinitionsPath);
+
         // Make sure the file structure handlers are added after the plugins:
-        di.call(serveFileStructure);
+        let serveFS = di.call(serveFileStructure);
+        serveFS(featuresFS, 'features');
+        serveFS(pageObjectsFS, 'page-objects');
+        serveFS(stepDefinitionsFS, 'step-definitions');
 
         // Always make sure the '*' handler happens last:
         application.get('*', renderIndex);
+
+        return Promise.all([
+            featuresFS.read(),
+            pageObjectsFS.read(),
+            stepDefinitionsFS.read(),
+        ]);
     });
 }
-init['@Inject'] = ['di', 'plugins'];
+init['@Inject'] = ['config', 'di', 'plugins'];
 
 function injectPlugins (plugins, application, templatePath) {
     plugins = plugins.filter(plugin => plugin.description.hasUI);

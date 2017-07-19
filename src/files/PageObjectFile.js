@@ -19,7 +19,7 @@ import { registerFileType } from 'tractor-file-structure';
 // Errors:
 import { TractorError } from 'tractor-error-handler';
 
-export class ComponentFile extends JavaScriptFile {
+export class PageObjectFile extends JavaScriptFile {
     delete (options = {}) {
         let { references } = this.fileStructure;
         let referencePaths = references[this.path];
@@ -83,7 +83,7 @@ export class ComponentFile extends JavaScriptFile {
     }
 }
 
-ComponentFile.prototype.extension = '.component.js';
-ComponentFile.prototype.type = 'components';
+PageObjectFile.prototype.extension = '.po.js';
+PageObjectFile.prototype.type = 'page-objects';
 
-registerFileType(ComponentFile);
+registerFileType(PageObjectFile);

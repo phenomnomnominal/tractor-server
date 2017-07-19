@@ -363,23 +363,23 @@ describe('server/files: JavaScriptFile:', () => {
         });
 
         it(`should update the name of a referenced file in another file's metadata`, () => {
-            let ast = esprima.parse('// { "components": [{ "name": "old name" }] }', { comment: true });
+            let ast = esprima.parse('// { "page-objects": [{ "name": "old name" }] }', { comment: true });
             let fileStructure = new FileStructure(path.join(path.sep, 'file-structure'));
             let filePath = path.join(path.sep, 'file-structure', 'directory', 'file.js');
 
             let file = new JavaScriptFile(filePath, fileStructure);
             file.ast = ast;
 
-            file.transformMetadata('old name', 'new name', 'components')
+            file.transformMetadata('old name', 'new name', 'page-objects')
 
             let [comment] = file.ast.comments;
-            let [component] = JSON.parse(comment.value).components;
+            let [pageObject] = JSON.parse(comment.value)['page-objects'];
 
-            expect(component.name).to.equal('new name');
+            expect(pageObject.name).to.equal('new name');
         });
 
         it(`should do nothing if comments aren't parsed`, () => {
-            let ast = esprima.parse('// { "components": [{ "name": "old name" }] }');
+            let ast = esprima.parse('// { "page-objects": [{ "name": "old name" }] }');
             let fileStructure = new FileStructure(path.join(path.sep, 'file-structure'));
             let filePath = path.join(path.sep, 'file-structure', 'directory', 'file.js');
 

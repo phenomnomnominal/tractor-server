@@ -20,55 +20,55 @@ import { TractorError } from 'tractor-error-handler';
 import { File, FileStructure } from 'tractor-file-structure';
 
 // Under test:
-import { ComponentFile } from './ComponentFile';
+import { PageObjectFile } from './PageObjectFile';
 
-describe('server/files: ComponentFile:', () => {
-    describe('ComponentFile constructor:', () => {
-        it('should create a new ComponentFile', () => {
+describe('server/files: PageObjectFile:', () => {
+    describe('PageObjectFile constructor:', () => {
+        it('should create a new PageObjectFile', () => {
             let fileStructure = new FileStructure(path.join(path.sep, 'file-structure'));
             let filePath = path.join(path.sep, 'file-structure', 'directory', 'file');
 
-            let file = new ComponentFile(filePath, fileStructure);
+            let file = new PageObjectFile(filePath, fileStructure);
 
-            expect(file).to.be.an.instanceof(ComponentFile);
+            expect(file).to.be.an.instanceof(PageObjectFile);
         });
 
         it('should inherit from JavaScriptFile', () => {
             let fileStructure = new FileStructure(path.join(path.sep, 'file-structure'));
             let filePath = path.join(path.sep, 'file-structure', 'directory', 'file');
 
-            let file = new ComponentFile(filePath, fileStructure);
+            let file = new PageObjectFile(filePath, fileStructure);
 
             expect(file).to.be.an.instanceof(JavaScriptFile);
         });
 
-        it('should have a `type` of "components"', () => {
+        it('should have a `type` of "page-objects"', () => {
             let fileStructure = new FileStructure(path.join(path.sep, 'file-structure'));
             let filePath = path.join(path.sep, 'file-structure', 'directory', 'file');
 
-            let file = new ComponentFile(filePath, fileStructure);
+            let file = new PageObjectFile(filePath, fileStructure);
 
-            expect(file.type).to.equal('components');
+            expect(file.type).to.equal('page-objects');
         });
 
-        it('should have an `extension` of ".component.js"', () => {
+        it('should have an `extension` of ".po.js"', () => {
             let fileStructure = new FileStructure(path.join(path.sep, 'file-structure'));
             let filePath = path.join(path.sep, 'file-structure', 'directory', 'file');
 
-            let file = new ComponentFile(filePath, fileStructure);
+            let file = new PageObjectFile(filePath, fileStructure);
 
-            expect(file.extension).to.equal('.component.js');
+            expect(file.extension).to.equal('.po.js');
         });
     });
 
-    describe('ComponentFile.delete:', () => {
+    describe('PageObjectFile.delete:', () => {
         it('should delete the file from disk', () => {
             let fileStructure = new FileStructure(path.join(path.sep, 'file-structure'));
-            let filePath = path.join(path.sep, 'file-structure', 'directory', 'file.component.js');
+            let filePath = path.join(path.sep, 'file-structure', 'directory', 'file.po.js');
 
             sinon.stub(File.prototype, 'delete').returns(Promise.resolve());
 
-            let file = new ComponentFile(filePath, fileStructure);
+            let file = new PageObjectFile(filePath, fileStructure);
 
             return file.delete()
             .then(() => {
@@ -81,12 +81,12 @@ describe('server/files: ComponentFile:', () => {
 
         it('should delete the list of references to the file', () => {
             let fileStructure = new FileStructure(path.join(path.sep, 'file-structure'));
-            let filePath = path.join(path.sep, 'file-structure', 'directory', 'file.component.js');
+            let filePath = path.join(path.sep, 'file-structure', 'directory', 'file.po.js');
             fileStructure.references[filePath] = [];
 
             sinon.stub(File.prototype, 'delete').returns(Promise.resolve());
 
-            let file = new ComponentFile(filePath, fileStructure);
+            let file = new PageObjectFile(filePath, fileStructure);
 
             return file.delete()
             .then(() => {
@@ -97,14 +97,14 @@ describe('server/files: ComponentFile:', () => {
             });
         });
 
-        it('should throw an error if the component is referenced by other files', () => {
+        it('should throw an error if the page object is referenced by other files', () => {
             let fileStructure = new FileStructure(path.join(path.sep, 'file-structure'));
-            let filePath = path.join(path.sep, 'file-structure', 'directory', 'file.component.js');
+            let filePath = path.join(path.sep, 'file-structure', 'directory', 'file.po.js');
             fileStructure.references[filePath] = ['fake reference'];
 
             sinon.stub(File.prototype, 'delete').returns(Promise.resolve());
 
-            let file = new ComponentFile(filePath, fileStructure);
+            let file = new PageObjectFile(filePath, fileStructure);
 
             return file.delete()
             .catch(e => {
@@ -117,13 +117,13 @@ describe('server/files: ComponentFile:', () => {
 
         it('should not throw an error if `isMove` is true', () => {
             let fileStructure = new FileStructure(path.join(path.sep, 'file-structure'));
-            let filePath = path.join(path.sep, 'file-structure', 'directory', 'file.component.js');
+            let filePath = path.join(path.sep, 'file-structure', 'directory', 'file.po.js');
             fileStructure.references[filePath] = [];
 
             sinon.stub(File.prototype, 'delete').returns(Promise.resolve());
             sinon.spy(Promise, 'reject');
 
-            let file = new ComponentFile(filePath, fileStructure);
+            let file = new PageObjectFile(filePath, fileStructure);
 
             return file.delete({ isMove: true })
             .then(() => {
@@ -136,13 +136,13 @@ describe('server/files: ComponentFile:', () => {
         });
     });
 
-    describe('ComponentFile.move:', () => {
+    describe('PageObjectFile.move:', () => {
         it('should move the file', () => {
             let fileStructure = new FileStructure(path.join(path.sep, 'file-structure'));
-            let filePath = path.join(path.sep, 'file-structure', 'directory', 'file.component.js');
-            let file = new ComponentFile(filePath, fileStructure);
-            let newFilePath = path.join(path.sep, 'file-structure', 'directory', 'new file.component.js');
-            let newFile = new ComponentFile(newFilePath, fileStructure);
+            let filePath = path.join(path.sep, 'file-structure', 'directory', 'file.po.js');
+            let file = new PageObjectFile(filePath, fileStructure);
+            let newFilePath = path.join(path.sep, 'file-structure', 'directory', 'new file.po.js');
+            let newFile = new PageObjectFile(newFilePath, fileStructure);
 
             sinon.stub(File.prototype, 'move').returns(Promise.resolve(newFile));
             sinon.stub(JavaScriptFile.prototype, 'save').returns(Promise.resolve());
@@ -166,12 +166,12 @@ describe('server/files: ComponentFile:', () => {
             });
         });
 
-        it('should update the class name of the component', () => {
+        it('should update the class name of the page object', () => {
             let fileStructure = new FileStructure(path.join(path.sep, 'file-structure'));
-            let filePath = path.join(path.sep, 'file-structure', 'directory', 'file.component.js');
-            let file = new ComponentFile(filePath, fileStructure);
-            let newFilePath = path.join(path.sep, 'file-structure', 'directory', 'new file.component.js');
-            let newFile = new ComponentFile(newFilePath, fileStructure);
+            let filePath = path.join(path.sep, 'file-structure', 'directory', 'file.po.js');
+            let file = new PageObjectFile(filePath, fileStructure);
+            let newFilePath = path.join(path.sep, 'file-structure', 'directory', 'new file.po.js');
+            let newFile = new PageObjectFile(newFilePath, fileStructure);
 
             sinon.stub(File.prototype, 'move').returns(Promise.resolve(newFile));
             sinon.stub(JavaScriptFile.prototype, 'save').returns(Promise.resolve());
@@ -198,12 +198,12 @@ describe('server/files: ComponentFile:', () => {
             });
         });
 
-        it('should update the class name of the component in files that reference it', () => {
+        it('should update the class name of the page object in files that reference it', () => {
             let fileStructure = new FileStructure(path.join(path.sep, 'file-structure'));
-            let filePath = path.join(path.sep, 'file-structure', 'directory', 'file.component.js');
-            let file = new ComponentFile(filePath, fileStructure);
-            let newFilePath = path.join(path.sep, 'file-structure', 'directory', 'new file.component.js');
-            let newFile = new ComponentFile(newFilePath, fileStructure);
+            let filePath = path.join(path.sep, 'file-structure', 'directory', 'file.po.js');
+            let file = new PageObjectFile(filePath, fileStructure);
+            let newFilePath = path.join(path.sep, 'file-structure', 'directory', 'new file.po.js');
+            let newFile = new PageObjectFile(newFilePath, fileStructure);
             let referenceFilePath = path.join(path.sep, 'file-structure', 'directory', 'reference file.step.js');
             let referenceFile = new StepDefinitionFile(referenceFilePath, fileStructure);
             fileStructure.references[filePath] = [referenceFile.path];
@@ -231,12 +231,12 @@ describe('server/files: ComponentFile:', () => {
             });
         });
 
-        it('should update the instance name of the component in files that reference it', () => {
+        it('should update the instance name of the page object in files that reference it', () => {
             let fileStructure = new FileStructure(path.join(path.sep, 'file-structure'));
-            let filePath = path.join(path.sep, 'file-structure', 'directory', 'file.component.js');
-            let file = new ComponentFile(filePath, fileStructure);
-            let newFilePath = path.join(path.sep, 'file-structure', 'directory', 'new file.component.js');
-            let newFile = new ComponentFile(newFilePath, fileStructure);
+            let filePath = path.join(path.sep, 'file-structure', 'directory', 'file.po.js');
+            let file = new PageObjectFile(filePath, fileStructure);
+            let newFilePath = path.join(path.sep, 'file-structure', 'directory', 'new file.po.js');
+            let newFile = new PageObjectFile(newFilePath, fileStructure);
             let referenceFilePath = path.join(path.sep, 'file-structure', 'directory', 'reference file.step.js');
             let referenceFile = new StepDefinitionFile(referenceFilePath, fileStructure);
             fileStructure.references[filePath] = [referenceFile.path];
@@ -264,12 +264,12 @@ describe('server/files: ComponentFile:', () => {
             });
         });
 
-        it('should update the metadata of the component in files that reference it', () => {
+        it('should update the metadata of the page object in files that reference it', () => {
             let fileStructure = new FileStructure(path.join(path.sep, 'file-structure'));
-            let filePath = path.join(path.sep, 'file-structure', 'directory', 'file.component.js');
-            let file = new ComponentFile(filePath, fileStructure);
-            let newFilePath = path.join(path.sep, 'file-structure', 'directory', 'new file.component.js');
-            let newFile = new ComponentFile(newFilePath, fileStructure);
+            let filePath = path.join(path.sep, 'file-structure', 'directory', 'file.po.js');
+            let file = new PageObjectFile(filePath, fileStructure);
+            let newFilePath = path.join(path.sep, 'file-structure', 'directory', 'new file.po.js');
+            let newFile = new PageObjectFile(newFilePath, fileStructure);
             let referenceFilePath = path.join(path.sep, 'file-structure', 'directory', 'reference file.step.js');
             let referenceFile = new StepDefinitionFile(referenceFilePath, fileStructure);
             fileStructure.references[filePath] = [referenceFile.path];
@@ -285,7 +285,7 @@ describe('server/files: ComponentFile:', () => {
 
             return file.move(update, options)
             .then(() => {
-                expect(referenceFile.transformMetadata).to.have.been.calledWith('file', 'new file', 'components');
+                expect(referenceFile.transformMetadata).to.have.been.calledWith('file', 'new file', 'page-objects');
             })
             .finally(() => {
                 File.prototype.move.restore();
@@ -296,12 +296,12 @@ describe('server/files: ComponentFile:', () => {
             });
         });
 
-        it('should update the require path to the component in files that reference it', () => {
+        it('should update the require path to the page object in files that reference it', () => {
             let fileStructure = new FileStructure(path.join(path.sep, 'file-structure'));
-            let filePath = path.join(path.sep, 'file-structure', 'directory', 'file.component.js');
-            let file = new ComponentFile(filePath, fileStructure);
-            let newFilePath = path.join(path.sep, 'file-structure', 'directory', 'new file.component.js');
-            let newFile = new ComponentFile(newFilePath, fileStructure);
+            let filePath = path.join(path.sep, 'file-structure', 'directory', 'file.po.js');
+            let file = new PageObjectFile(filePath, fileStructure);
+            let newFilePath = path.join(path.sep, 'file-structure', 'directory', 'new file.po.js');
+            let newFile = new PageObjectFile(newFilePath, fileStructure);
             let referenceFilePath = path.join(path.sep, 'file-structure', 'directory', 'reference file.step.js');
             let referenceFile = new StepDefinitionFile(referenceFilePath, fileStructure);
             fileStructure.references[filePath] = [referenceFile.path];
@@ -334,10 +334,10 @@ describe('server/files: ComponentFile:', () => {
 
         it('should save any files that reference it', () => {
             let fileStructure = new FileStructure(path.join(path.sep, 'file-structure'));
-            let filePath = path.join(path.sep, 'file-structure', 'directory', 'file.component.js');
-            let file = new ComponentFile(filePath, fileStructure);
-            let newFilePath = path.join(path.sep, 'file-structure', 'directory', 'new file.component.js');
-            let newFile = new ComponentFile(newFilePath, fileStructure);
+            let filePath = path.join(path.sep, 'file-structure', 'directory', 'file.po.js');
+            let file = new PageObjectFile(filePath, fileStructure);
+            let newFilePath = path.join(path.sep, 'file-structure', 'directory', 'new file.po.js');
+            let newFile = new PageObjectFile(newFilePath, fileStructure);
             let referenceFilePath = path.join(path.sep, 'file-structure', 'directory', 'reference file.step.js');
             let referenceFile = new StepDefinitionFile(referenceFilePath, fileStructure);
             fileStructure.references[filePath] = [referenceFile.path];
@@ -366,10 +366,10 @@ describe('server/files: ComponentFile:', () => {
 
         it('should throw if updating references fails', () => {
             let fileStructure = new FileStructure(path.join(path.sep, 'file-structure'));
-            let filePath = path.join(path.sep, 'file-structure', 'directory', 'file.component.js');
-            let file = new ComponentFile(filePath, fileStructure);
-            let newFilePath = path.join(path.sep, 'file-structure', 'directory', 'new file.component.js');
-            let newFile = new ComponentFile(newFilePath, fileStructure);
+            let filePath = path.join(path.sep, 'file-structure', 'directory', 'file.po.js');
+            let file = new PageObjectFile(filePath, fileStructure);
+            let newFilePath = path.join(path.sep, 'file-structure', 'directory', 'new file.po.js');
+            let newFile = new PageObjectFile(newFilePath, fileStructure);
 
             sinon.stub(File.prototype, 'move').returns(Promise.resolve(newFile));
             sinon.stub(JavaScriptFile.prototype, 'save').returns(Promise.resolve());
